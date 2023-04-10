@@ -1,0 +1,39 @@
+# Function to predict the outcome of a match using Awel theory
+def awel_predict(team1_wdl, team2_wdl, team1_bts, team2_bts, team1_over25, team2_over25):
+    # Calculate the number of wins, draws, and losses for each team
+    team1_wins = team1_wdl.count('W')
+    team2_wins = team2_wdl.count('W')
+    team1_draws = team1_wdl.count('D')
+    team2_draws = team2_wdl.count('D')
+    team1_losses = team1_wdl.count('L')
+    team2_losses = team2_wdl.count('L')
+
+    # Calculate the likelihood of both teams scoring
+    total_bts = team1_bts + team2_bts
+    bts_percent = (total_bts / 10) * 100
+
+    # Calculate the likelihood of over 2.5 goals being scored
+    total_over25 = team1_over25 + team2_over25
+    over25_percent = (total_over25 / 10) * 100
+
+    # Predict the outcome based on Awel theory
+    if team1_wins > team2_wins and team1_draws > team2_draws:
+        return "Team 1 is likely to win"
+    elif team1_wins < team2_wins and team1_draws < team2_draws:
+        return "Team 2 is likely to win"
+    else:
+        return "The match is likely to end in a draw with both teams scoring"
+
+# Get user inputs for the last 5 matches for each team
+team1_wdl = input("Enter the last 5 match results for Team 1 (W/D/L): ").split(',')
+team2_wdl = input("Enter the last 5 match results for Team 2 (W/D/L): ").split(',')
+team1_bts = input("Enter the number of times Team 1 has scored with both teams scoring (BTS) in the last 10 matches: ")
+team2_bts = input("Enter the number of times Team 2 has scored with both teams scoring (BTS) in the last 10 matches: ")
+team1_over25 = input("Enter the number of times there have been over 2.5 goals in Team 1's last 10 matches: ")
+team2_over25 = input("Enter the number of times there have been over 2.5 goals in Team 2's last 10 matches: ")
+
+# Predict the outcome using Awel theory
+prediction = awel_predict(team1_wdl, team2_wdl, int(team1_bts), int(team2_bts), int(team1_over25), int(team2_over25))
+
+# Output the prediction
+print(f"Prediction: {prediction}")
